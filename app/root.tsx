@@ -9,9 +9,11 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+import sansFontStyles from "@fontsource-variable/inter/index.css";
 import stylesheet from "~/styles/global.css";
 
 export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: sansFontStyles },
   { rel: "stylesheet", href: stylesheet },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
