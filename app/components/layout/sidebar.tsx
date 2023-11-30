@@ -7,6 +7,7 @@ import {
   IconReportMedical,
   IconUserCircle,
 } from "@tabler/icons-react";
+import { TaraTechLogo } from "~/components/shared/taratech-logo";
 
 export const settingsNavItems = [
   {
@@ -43,6 +44,7 @@ export function Sidebar() {
   return (
     <div className="flex max-w-4xl flex-col gap-8">
       <aside className="w-full overflow-visible sm:block sm:max-w-[240px]">
+        <TaraTechLogo />
         <SidebarNav items={settingsNavItems} />
       </aside>
     </div>
