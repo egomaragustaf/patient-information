@@ -1,5 +1,5 @@
 import { Sidebar } from "~/components/layout/sidebar";
-import { cn } from "~/utils";
+import { cn } from "~/utils/cn";
 
 interface Props {
   className?: string;

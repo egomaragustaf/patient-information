@@ -1,5 +1,5 @@
 import { NavLink } from "@remix-run/react";
-import { cn } from "~/utils";
+import { cn } from "~/utils/cn";
 import { buttonVariants } from "~/components/ui/button";
 import {
   IconHeartHandshake,
