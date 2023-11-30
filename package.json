@@ -9,6 +9,7 @@
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc",
     "db:seed": "prisma db seed",
+    "prebuild": "prisma db push",
     "postinstall": "prisma generate"
   },
   "dependencies": {
