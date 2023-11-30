@@ -1,18 +1,41 @@
 import { NavLink } from "@remix-run/react";
 import { cn } from "~/utils";
 import { buttonVariants } from "~/components/ui/button";
+import {
+  IconHeartHandshake,
+  IconLayoutDashboard,
+  IconReportMedical,
+  IconUserCircle,
+} from "@tabler/icons-react";
 
 export const settingsNavItems = [
-  { title: "Dashboard", to: "/dashboard" },
-  { title: "Profile", to: "/profile" },
-  { title: "Patients", to: "/patients" },
-  { title: "Medical Records", to: "/medical-records" },
+  {
+    title: "Dashboard",
+    to: "/dashboard",
+    icon: <IconLayoutDashboard className="icon" width={22} height={22} />,
+  },
+  {
+    title: "Profile",
+    to: "/profile",
+    icon: <IconUserCircle className="icon" width={22} height={22} />,
+  },
+  {
+    title: "Patients",
+    to: "/patients",
+    icon: <IconHeartHandshake className="icon" width={24} height={24} />,
+  },
+  {
+    title: "Medical Records",
+    to: "/medical-records",
+    icon: <IconReportMedical className="icon" width={22} height={22} />,
+  },
 ];
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
     to: string;
     title: string;
+    icon?: React.ReactNode;
   }[];
 }
 
@@ -44,9 +67,10 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
               isActive
                 ? "bg-primary hover:bg-slate-800 hover:text-slate-50 text-slate-50"
                 : "hover:bg-muted",
-              "justify-start"
+              "justify-start gap-2 text-base"
             )
           }>
+          {item.icon}
           {item.title}
         </NavLink>
       ))}
