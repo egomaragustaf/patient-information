@@ -11,7 +11,65 @@ datasource db {
 model User {
   id String @id @default(cuid())
 
-  name     String
-  email    String @unique
-  username String @unique
+  firstName     String?
+  lastName      String?
+  gender        String?
+  dateOfBirth   String?
+  contactNumber String?
+  email         String?        @unique
+  locations     UserLocation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Patient {
+  id String @id @default(cuid())
+
+  firstName     String
+  lastName      String
+  gender        String
+  dateOfBirth   String
+  contactNumber String
+  email         String            @unique
+  locations     PatientLocation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserLocation {
+  id String @id @default(cuid())
+
+  user   User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  userId String @unique
+
+  street      String?
+  city        String?
+  province    String?
+  postalCode  String?
+  countryCode String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model PatientLocation {
+  id String @id @default(cuid())
+
+  patient   Patient @relation(fields: [patientId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  patientId String  @unique
+
+  street      String?
+  city        String?
+  province    String?
+  postalCode  String?
+  countryCode String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([patientId])
 }
