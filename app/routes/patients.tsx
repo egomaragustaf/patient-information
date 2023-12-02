@@ -38,7 +38,8 @@ export default function Route() {
             <TableHead className="w-60">Full Name</TableHead>
             <TableHead>Gender</TableHead>
             <TableHead>Date of Birth</TableHead>
-            <TableHead className="text-right">Contact Number</TableHead>
+            <TableHead>Address</TableHead>
+            <TableHead>Contact Number</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -50,7 +51,8 @@ export default function Route() {
                 </TableCell>
                 <TableCell>{patient.gender}</TableCell>
                 <TableCell>{patient.dateOfBirth}</TableCell>
-                <TableCell className="text-right">
+                <TableCell>{patient.locations[0].street} {patient.locations[0].city}</TableCell>
+                <TableCell>
                   {patient.contactNumber}
                 </TableCell>
               </TableRow>
@@ -59,7 +61,7 @@ export default function Route() {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell className="text-right" colSpan={4}>
+            <TableCell className="text-right" colSpan={5}>
               Pagination here
             </TableCell>
           </TableRow>

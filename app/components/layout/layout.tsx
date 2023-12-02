@@ -10,7 +10,7 @@ export function Layout({ className, children }: Props) {
   return (
     <div className={cn("flex min-h-screen")}>
       <Sidebar />
-      <main className={cn("flex-[1] lg:ml-16 p-6", className)}>{children}</main>
+      <main className={cn("w-full flex flex-col gap-8 lg:ml-16 p-8", className)}>{children}</main>
     </div>
   );
 }
