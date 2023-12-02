@@ -31,7 +31,6 @@ export default function Route() {
     <Layout>
       <h1>Patients Page</h1>
       {/* <pre>{JSON.stringify(patients, null, 2)}</pre> */}
-
       <Table>
         <TableCaption>A list of data patients.</TableCaption>
         <TableHeader>
