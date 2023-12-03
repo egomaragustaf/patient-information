@@ -1,6 +1,7 @@
 import { json, type LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Layout } from "~/components/layout/layout";
+import { SearchFormPatients } from "~/components/shared/search-form-patients";
 import {
   Table,
   TableBody,
@@ -14,14 +15,52 @@ import {
 import { prisma } from "~/libs/db.server";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const patients = await prisma.patient.findMany({
-    include: {
-      locations: true,
-    },
-    take: 5,
-  });
+  const url = new URL(request.url);
+  const query = url.searchParams.get("q");
 
-  return json({ patients });
+  if (!query) {
+    const patients = await prisma.patient.findMany({
+      take: 10,
+      include: {
+        locations: true,
+      },
+    });
+
+    return json({ query, count: patients.length, patients });
+  }
+
+  const [patients] = await prisma.$transaction([
+    prisma.patient.findMany({
+      where: {
+        OR: [
+          { firstName: { contains: query } },
+          { lastName: { contains: query } },
+          { locations: { some: { city: { contains: query } } } },
+        ],
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        gender: true,
+        email: true,
+        contactNumber: true,
+        dateOfBirth: true,
+        locations: {
+          select: {
+            street: true,
+            city: true,
+            province: true,
+            postalCode: true,
+            countryCode: true,
+          },
+        },
+      },
+      orderBy: [{ firstName: "asc" }],
+    }),
+  ]);
+
+  return json({ query, count: patients.length, patients });
 };
 
 export default function Route() {
@@ -31,6 +70,7 @@ export default function Route() {
     <Layout>
       <h1>Patients Page</h1>
       {/* <pre>{JSON.stringify(patients, null, 2)}</pre> */}
+      <SearchFormPatients />
       <Table>
         <TableCaption>A list of data patients.</TableCaption>
         <TableHeader>
@@ -51,10 +91,10 @@ export default function Route() {
                 </TableCell>
                 <TableCell>{patient.gender}</TableCell>
                 <TableCell>{patient.dateOfBirth}</TableCell>
-                <TableCell>{patient.locations[0].street} {patient.locations[0].city}</TableCell>
                 <TableCell>
-                  {patient.contactNumber}
+                  {patient.locations[0].street} {patient.locations[0].city}
                 </TableCell>
+                <TableCell>{patient.contactNumber}</TableCell>
               </TableRow>
             );
           })}
