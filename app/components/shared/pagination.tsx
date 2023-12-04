@@ -48,7 +48,7 @@ interface PaginationSearchProps extends CommonPaginationProps {
 
 export function getPaginationConfigs({
   request,
-  defaultLimit = 5,
+  defaultLimit = 10,
   defaultPage = 1,
 }: PaginationConfigs) {
   const url = new URL(request.url);

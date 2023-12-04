@@ -20,7 +20,7 @@ import {
 import { prisma } from "~/libs/db.server";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const config = getPaginationConfigs({ request, defaultLimit: 5 });
+  const config = getPaginationConfigs({ request, defaultLimit: 10 });
 
   const where = !config.queryParam
     ? {}
