@@ -7,7 +7,6 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -99,13 +98,6 @@ export default function Route() {
             );
           })}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell className="text-right" colSpan={5}>
-              Pagination here
-            </TableCell>
-          </TableRow>
-        </TableFooter>
       </Table>
     </Layout>
   );
