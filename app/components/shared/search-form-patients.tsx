@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function SearchFormPatients({
-  action = "/patients/search",
+  action = "/patients",
   placeholder = "Search...",
 }: Props) {
   const [searchParams] = useSearchParams();

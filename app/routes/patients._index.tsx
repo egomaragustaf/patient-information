@@ -28,6 +28,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         OR: [
           { firstName: { contains: config.queryParam } },
           { lastName: { contains: config.queryParam } },
+          { locations: { some: { city: { contains: config.queryParam } } } },
+          { locations: { some: { street: { contains: config.queryParam } } } },
         ],
       };
 
