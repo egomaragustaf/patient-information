@@ -3,6 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "~/utils/cn";
+import { IconLoader2 } from "@tabler/icons-react";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -53,4 +54,54 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = "Button";
 
-export { Button, buttonVariants };
+export interface ButtonLoadingProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  isSubmitting?: boolean;
+  submittingText?: React.ReactNode;
+  isLoading?: boolean;
+  loadingText?: React.ReactNode;
+  isDisabledWhenLoading?: boolean;
+}
+
+const ButtonLoading = React.forwardRef<HTMLButtonElement, ButtonLoadingProps>(
+  (
+    {
+      type = "submit",
+      variant = "default",
+      size = "default",
+      className,
+      name,
+      value,
+      isSubmitting = false,
+      submittingText = "",
+      isLoading = false,
+      loadingText = "",
+      isDisabledWhenLoading = true,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const isActive = isDisabledWhenLoading
+      ? isSubmitting || isLoading
+      : isDisabledWhenLoading;
+
+    return (
+      <button
+        className={cn(buttonVariants({ variant, size, className }), "flex")}
+        type={type}
+        ref={ref}
+        name={name}
+        value={value}
+        disabled={isActive}
+        {...props}>
+        {isActive && <IconLoader2 className="h-4 w-4 animate-spin" />}
+        {isSubmitting ? submittingText : isLoading ? loadingText : children}
+      </button>
+    );
+  }
+);
+ButtonLoading.displayName = "ButtonLoading";
+
+export { Button, ButtonLoading, buttonVariants };

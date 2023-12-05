@@ -5,7 +5,18 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "~/utils/cn";
 
 const labelVariants = cva(
-  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+  "text-base font-bold font-brand leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+  {
+    variants: {
+      variant: {
+        default: "",
+        disabled: "opacity-50",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
 );
 
 const Label = React.forwardRef<
@@ -21,4 +32,4 @@ const Label = React.forwardRef<
 ));
 Label.displayName = LabelPrimitive.Root.displayName;
 
-export { Label };
+export { labelVariants, Label };
