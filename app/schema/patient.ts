@@ -25,6 +25,7 @@ export const schemaPatient = z.object({
 
   export const schemaPatientUpdate = z.object({
     patientId: id,
+    id,
     firstName: z.string().min(1, "First name require at least 1 characters").max(50, "First name can't be longer than 50 characters"),
     lastName: z.string().min(1, "Last name require at least 1 characters").max(50, "Last name can't be longer than 50 characters"),
     gender: z.string().min(1, "Gender require at least 1 characters").max(15, "Gender can't be longer than 15 characters"),
