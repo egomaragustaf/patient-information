@@ -1,7 +1,6 @@
 import { conform, useFieldset, useForm } from "@conform-to/react";
-import { getFieldsetConstraint, parse } from "@conform-to/zod";
+import { parse } from "@conform-to/zod";
 import { Form, useActionData, useNavigation } from "@remix-run/react";
-import { useId } from "react";
 
 import type { action as actionAddNewPatients } from "~/routes/patients.add";
 import { schemaPatient } from "~/schema/patient";
@@ -15,11 +14,9 @@ export function AddNewPatientsForm() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
-  const id = useId();
   const [
     form,
     {
-      patientId,
       firstName,
       lastName,
       gender,
@@ -29,10 +26,8 @@ export function AddNewPatientsForm() {
       locations,
     },
   ] = useForm({
-    id,
     shouldValidate: "onSubmit",
     lastSubmission,
-    constraint: getFieldsetConstraint(schemaPatient),
     onValidate({ formData }) {
       return parse(formData, { schema: schemaPatient });
     },
@@ -43,23 +38,21 @@ export function AddNewPatientsForm() {
   );
 
   return (
-    <section className="space-y-4 rounded bg-stone-900 p-4">
+    <section className="space-y-4 rounded p-4 bg-slate-100">
       <header>
-        <h3>Quick Broadcast</h3>
         <p className="text-sm text-muted-foreground">
-          Quickly create new broadcast to ask or offer
+          This is form to add patient
         </p>
       </header>
 
       <Form method="POST" {...form.props} className="space-y-6">
         <FormFieldSet>
-          <input hidden {...conform.input(patientId)} />
-
           <FormField>
             <FormLabel htmlFor={firstName.id}>First Name</FormLabel>
             <Input
               {...conform.input(firstName)}
-              type="text"
+              id={firstName.id}
+              name="firstName"
               placeholder="John"
             />
             {firstName.error && (
@@ -71,7 +64,12 @@ export function AddNewPatientsForm() {
 
           <FormField>
             <FormLabel htmlFor={lastName.id}>Last Name</FormLabel>
-            <Input {...conform.input(lastName)} type="text" placeholder="Doe" />
+            <Input
+              {...conform.input(lastName)}
+              id={lastName.id}
+              name="lastName"
+              placeholder="Doe"
+            />
             {lastName.error && (
               <Alert variant="destructive" id={lastName.errorId}>
                 {lastName.error}
@@ -83,7 +81,8 @@ export function AddNewPatientsForm() {
             <FormLabel htmlFor={gender.id}>Gender</FormLabel>
             <Input
               {...conform.input(gender)}
-              type="text"
+              id={gender.id}
+              name="gender"
               placeholder="Male/Female"
             />
             {gender.error && (
@@ -97,7 +96,8 @@ export function AddNewPatientsForm() {
             <FormLabel htmlFor={dateOfBirth.id}>Date of Birth</FormLabel>
             <Input
               {...conform.input(dateOfBirth)}
-              type="text"
+              id={dateOfBirth.id}
+              name="dateOfBirth"
               placeholder="1996-12-30"
             />
             {dateOfBirth.error && (
@@ -111,7 +111,8 @@ export function AddNewPatientsForm() {
             <FormLabel htmlFor={contactNumber.id}>Contact Number</FormLabel>
             <Input
               {...conform.input(contactNumber)}
-              type="text"
+              id={contactNumber.id}
+              name="contactNumber"
               placeholder="+628-123-456-7890"
             />
             {contactNumber.error && (
@@ -125,7 +126,8 @@ export function AddNewPatientsForm() {
             <FormLabel htmlFor={email.id}>Email</FormLabel>
             <Input
               {...conform.input(email)}
-              type="text"
+              id={email.id}
+              name="email"
               placeholder="johndoe@mail.com"
             />
             {email.error && (
@@ -139,7 +141,8 @@ export function AddNewPatientsForm() {
             <FormLabel htmlFor={street.id}>Street</FormLabel>
             <Input
               {...conform.input(street)}
-              type="text"
+              id={street.id}
+              name="street"
               placeholder="Ex: Jalan Bahagia"
             />
             {street.error && (
@@ -150,10 +153,11 @@ export function AddNewPatientsForm() {
           </FormField>
 
           <FormField>
-            <FormLabel htmlFor={city.id}>city</FormLabel>
+            <FormLabel htmlFor={city.id}>City</FormLabel>
             <Input
               {...conform.input(city)}
-              type="text"
+              id={city.id}
+              name="city"
               placeholder="Ex: Jakarta"
             />
             {city.error && (
@@ -164,10 +168,11 @@ export function AddNewPatientsForm() {
           </FormField>
 
           <FormField>
-            <FormLabel htmlFor={province.id}>province</FormLabel>
+            <FormLabel htmlFor={province.id}>Province</FormLabel>
             <Input
               {...conform.input(province)}
-              type="text"
+              id={province.id}
+              name="province"
               placeholder="Ex: DKI Jakarta"
             />
             {province.error && (
@@ -181,7 +186,8 @@ export function AddNewPatientsForm() {
             <FormLabel htmlFor={countryCode.id}>Country Code</FormLabel>
             <Input
               {...conform.input(countryCode)}
-              type="text"
+              id={countryCode.id}
+              name="countryCode"
               placeholder="Ex: 62"
             />
             {countryCode.error && (
@@ -195,7 +201,8 @@ export function AddNewPatientsForm() {
             <FormLabel htmlFor={postalCode.id}>Postal Code</FormLabel>
             <Input
               {...conform.input(postalCode)}
-              type="text"
+              id={postalCode.id}
+              name="postalCode"
               placeholder="Ex: 1234"
             />
             {postalCode.error && (
@@ -208,8 +215,9 @@ export function AddNewPatientsForm() {
           <ButtonLoading
             type="submit"
             isSubmitting={isSubmitting}
-            submittingText="Sending...">
-            Send
+            submittingText="Submitting..."
+            className="w-full">
+            Submit
           </ButtonLoading>
         </FormFieldSet>
       </Form>
